@@ -1,0 +1,72 @@
+version: '3'
+services:
+
+    nginx-1.10-be:
+        image: maxnag/nginx-1.10:latest
+        container_name: smsedge-be_nginx-1.10
+        restart: always
+        ports:
+            - 8080:80
+        environment:
+            VIRTUAL_HOST: be
+        links:
+            - php7.2-fpm
+        working_dir: "/var/www/be"
+        volumes:
+            - ./www/smsedge-be:/var/www/be:rw
+            - ./nginx/localhost-be.conf:/etc/nginx/sites-available/localhost.conf
+            - ./nginx/localhost-be.conf:/etc/nginx/sites-enabled/localhost.conf
+
+            - ./logs/nginx.error.log:/var/log/nginx/error.log
+            - ./logs/nginx.access.log:/var/log/nginx/access.log
+
+    nginx-1.10-fe:
+        image: maxnag/nginx-1.10:latest
+        container_name: smsedge-fe_nginx-1.10
+        restart: always
+        ports:
+            - 80:80
+        environment:
+            VIRTUAL_HOST: localhost-fe
+        links:
+            - php7.2-fpm
+        working_dir: "/var/www/fe"
+        volumes:
+            - ./www/smsedge-fe:/var/www/fe:rw
+            - ./nginx/localhost-fe.conf:/etc/nginx/sites-available/localhost.conf
+            - ./nginx/localhost-fe.conf:/etc/nginx/sites-enabled/localhost.conf
+
+            - ./logs/nginx.error.log:/var/log/nginx/error.log
+            - ./logs/nginx.access.log:/var/log/nginx/access.log
+
+    mysql-5.6:
+        image: maxnag/mysql-5.6:latest
+        container_name: smsedge-be_mysql-5.6
+        restart: always
+        ports:
+            - 3306:3306
+        volumes:
+            - db-data:/docker-entrypoint-initdb.d
+
+            - ./logs/mysql.error.log:/var/log/mysql/error.log
+
+    php7.2-fpm:
+        image: maxnag/php7.2-fpm:latest
+        container_name: smsedge-be_php7.2-fpm
+        restart: always
+        ports:
+            - 9070:9000
+        environment:
+            TERM: xterm
+            XDEBUG_CONFIG: remote_host=localhost
+        working_dir: "/var/www/be"
+        volumes:
+            - ./www/smsedge-be:/var/www/be:rw
+
+            - ./logs/php-fpm.error.log:/var/log/php7.2-fpm.access.log
+            - ./logs/php-fpm.access.log:/var/log/php7.2-fpm.error.log
+        links:
+            - mysql-5.6
+volumes:
+    db-data:
+        external: false

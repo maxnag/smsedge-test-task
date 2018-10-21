@@ -1,0 +1,3 @@
+2018/10/21 08:38:00 [error] 13#13: *1 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 172.19.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2018/10/21 08:38:01 [error] 13#13: *2 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 172.19.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2018/10/21 08:41:34 [alert] 1#1: unknown process 20 exited on signal 1
