@@ -2,7 +2,7 @@ version: '3'
 services:
 
     nginx-1.10-be:
-        image: maxnag/smsedge-be:latest
+        image: maxnag/smsedge-be:files
         container_name: smsedge-be
         restart: always
         ports:
@@ -11,50 +11,29 @@ services:
             VIRTUAL_HOST: localhost-be
         links:
             - php7.2-fpm
-        working_dir: "/var/www/be"
-        volumes:
-            - smsedge-be:/var/www/be:rw
 
     nginx-1.10-fe:
-        image: maxnag/smsedge-fe:latest
+        image: maxnag/smsedge-fe:files
         container_name: smsedge-fe
         restart: always
         ports:
             - 80:80
         environment:
             VIRTUAL_HOST: localhost-fe
-        links:
-            - php7.2-fpm
-        working_dir: "/var/www/fe"
-        volumes:
-            - smsedge-fe:/var/www/fe:rw
 
     mysql-5.6:
-        image: maxnag/smsedge-mysql:latest
+        image: maxnag/smsedge-mysql:files
         container_name: smsedge-be-mysql
         restart: always
         ports:
             - 3307:3306
-        volumes:
-            - db-data:/docker-entrypoint-initdb.d
 
     php7.2-fpm:
-        image: maxnag/smsedge-php:latest
+        image: maxnag/smsedge-be-php:files
         container_name: smsedge-be-php
         restart: always
         environment:
             TERM: xterm
             XDEBUG_CONFIG: remote_host=localhost
-        working_dir: "/var/www/be"
-        volumes:
-            - smsedge-be:/var/www/be:rw
         links:
             - mysql-5.6
-
-volumes:
-    db-data:
-        external: false
-    smsedge-be:
-        external: false
-    smsedge-fe:
-        external: false
