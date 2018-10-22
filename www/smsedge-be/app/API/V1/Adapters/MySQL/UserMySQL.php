@@ -123,7 +123,7 @@ class UserMySQL extends MySQLAdapter implements UserInterface
 
         if (!empty($filters->search)) {
             $userModel
-                ->where($this->userTableName . '.name', 'LIKE', str_replace(['_', '%', '?'], ['\_', '\%', '\?'], $filters->search) . '%');
+                ->where($this->userTableName . '.usr_name', 'LIKE', str_replace(['_', '%', '?'], ['\_', '\%', '\?'], $filters->search) . '%');
         }
 
         return $userModel;

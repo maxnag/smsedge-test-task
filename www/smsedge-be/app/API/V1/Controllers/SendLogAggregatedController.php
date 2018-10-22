@@ -40,7 +40,12 @@ class SendLogAggregatedController extends BaseApiController
             $this->request->attributes->add(['id' => $id]);
 
             $logService = new SendLogAggregatedService($this->request, new Argument, new SendLogAggregatedMapper($this->registry));
-            $logsData = $logService->validateRequest(new LogRequestParamValidator(['date_from', 'date_to']))->getSendLogsAggregated()->getData();
+
+            if ($id !== null) {
+                $logsData = $logService->validateRequest(new LogRequestParamValidator(['id']))->getSendLogsAggregated()->getData();
+            } else {
+                $logsData = $logService->validateRequest(new LogRequestParamValidator(['date_from', 'date_to']))->getSendLogsAggregated()->getData();
+            }
 
             $collectData = (new TransformerData($this->request))
                 ->setArguments($logService->getArguments())

@@ -127,8 +127,14 @@ class CountryMySQL extends MySQLAdapter implements CountryInterface
         }
 
         if (!empty($filters->search)) {
-            $countryModel
-                ->where($this->countryTableName . '.title', 'LIKE', str_replace(['_', '%', '?'], ['\_', '\%', '\?'], $filters->search) . '%');
+            $term = str_replace(['_', '%', '"'], ['\_', '\%', '\"'], trim($filters->search));
+
+            $countryModel->where(function ($query) use ($term) {
+                $query
+                    ->orWhere($this->countryTableName . '.cnt_title', 'LIKE', '%' . $term . '%')
+                    ->orWhere($this->countryTableName . '.cnt_code', 'LIKE', '%' . $term . '%')
+                ;
+            });
         }
 
         return $countryModel;

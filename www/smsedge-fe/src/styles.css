@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap/dist/css/bootstrap-grid.css";
+@import "~bootstrap/dist/css/bootstrap-reboot.css";
+
+body {
+    background: #FFF url("/assets/images/grid-18px-masked.png");
+}
+
+.hide-table {
+    display: none;
+}

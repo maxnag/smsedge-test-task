@@ -1,0 +1,46 @@
+<form class="form justify-content-center" novalidate>
+    <div class="form-row">
+        <div class="col-auto">
+            <input #countryName type="text" class="form-control" id="country" autocomplete="off" placeholder="Country name" (change)="changeCountry()" />
+        </div>
+        <div class="col-auto">
+            <input #userName type="text" class="form-control" id="user" autocomplete="off" placeholder="User name" (change)="changeUserName()" />
+        </div>
+        <div class="col-auto">
+            <input #dateFrom readonly="readonly" type="text" class="form-control" id="date-from"
+                   formControlName="date-from" aria-describedby="date-from"
+                   placeholder="Date from"
+                   autocomplete="off"
+                   [class.is-invalid]="!dateFromValidation"
+            />
+        </div>
+        <div class="col-auto">
+            <input #dateTo readonly="readonly" type="text" class="form-control" id="date-to"
+                   formControlName="date-to" aria-describedby="date-to"
+                   placeholder="Date to"
+                   autocomplete="off"
+                   [class.is-invalid]="!dateToValidation"
+            />
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" (click)="showAggregatedLogData()" [disabled]="!dateFromValidation || !dateToValidation">Search</button>
+        </div>
+    </div>
+</form>
+
+<table class="table" [class.hide-table]="!aggregatedLogData.length">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Successfully send</th>
+            <th scope="col">Failed</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let rows of aggregatedLogData">
+            <td>{{rows.date}}</td>
+            <td>{{rows.success}}</td>
+            <td>{{rows.fail}}</td>
+        </tr>
+    </tbody>
+</table>
