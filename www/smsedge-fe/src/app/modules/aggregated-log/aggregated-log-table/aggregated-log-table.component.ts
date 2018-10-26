@@ -1,9 +1,8 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AggregatedLogServiceService} from "../aggregated-log-service.service";
 import {Country} from "../../../models/country";
 import {User} from "../../../models/user";
 import {Log} from "../../../models/log";
-import {throwError} from "rxjs";
 
 declare var jQuery: any;
 

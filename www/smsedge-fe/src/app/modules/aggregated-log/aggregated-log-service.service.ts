@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, pipe, throwError} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {Country} from "../../models/country";
 
 // Observable operators
